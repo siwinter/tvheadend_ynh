@@ -89,11 +89,8 @@ tvheadend_deb_url=""
 if [ -n "$(uname -m | grep arm)" ]
 then
     tvheadend_deb_url="$tvheadend_deb_arm"
-elif [ -n "$(uname -m | grep x86_64)" ]
-then
+else [ -n "$(uname -m | grep x86_64)" ]
     tvheadend_deb_url="$tvheadend_deb_x86_64"
-else
-	tvheadend_deb_url="$tvheadend_deb_x86_32"
 fi
 
 ynh_exec_quiet "wget -q -O $tvheadend_deb_dst $tvheadend_deb_url"
