@@ -114,6 +114,12 @@ then
 fi
 
 #=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+yunohost service add $app --log "/var/log/$app.log"
+
+#=================================================
 # SETUP SSOWAT
 #=================================================
 ynh_script_progression --message="Configuring SSOwat..." --weight=1
