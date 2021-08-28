@@ -107,11 +107,12 @@ ynh_remove_app_dependencies
 #=================================================
 # CLOSE TVHEADEND PORTS
 #=================================================
-if yunohost firewall list | grep -q "\- $port$"
-then
-    ynh_script_progression --message="Closing port $port..." --weight=8
-    ynh_exec_warn_less yunohost firewall disallow TCP $port
-fi
+#siwi: port not opened in install script
+#if yunohost firewall list | grep -q "\- $port$"
+#then
+#    ynh_script_progression --message="Closing port $port..." --weight=8
+#    ynh_exec_warn_less yunohost firewall disallow TCP $port
+#fi
 
 if yunohost firewall list | grep -q "\- $stream_port$"
 then
