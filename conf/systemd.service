@@ -1,0 +1,15 @@
+[Unit]
+Description=TV Streaming server
+After=dbus.service
+After=network.target
+
+[Service]
+#User=__APP__
+Type=forking
+ExecStart=__FINALPATH__/__APP__  -f -p /run/tvheadend.pid -u __APP_ -g video -6 --http_port __PORT__ --htsp_port __STREAM_PORT__ -C
+ExecStop=/usr/bin/rm /run/tvheadend.pid
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
