@@ -72,7 +72,7 @@ ynh_script_progression --message="Installing dependencies..." --weight=15
 
 if [ -n "$(uname -m | grep arm)" ]
 then
-    ynh_install_app_dependencies $pkg_dependencies_rb
+    ynh_install_app_dependencies $pkg_dependencies_arm
 else
 	ynh_install_app_dependencies $pkg_dependencies_x86
 fi
