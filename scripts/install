@@ -93,7 +93,7 @@ ynh_exec_warn_less dpkg -i ../sources/tvheadend-data_4.2.8-dmo1_all.deb
 if [ -n "$(uname -m | grep arm)" ]
 then
     ynh_script_progression --message="Install tvheadend for armfh..." --weight=5
-    ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_armhf.deb
+    ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-ynh-armhf.deb
 else [ -n "$(uname -m | grep x86_64)" ]
     ynh_script_progression --message="Install tvheadend for amd64..." --weight=5
     ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_amd64.deb
