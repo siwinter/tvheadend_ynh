@@ -78,6 +78,14 @@ else
 fi
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..." --time --weight=1
+
+# Create a system user
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
 # INSTALL TVHEADEND DEB PACKAGE
 #=================================================
 
@@ -85,6 +93,7 @@ fi
 #temp_folder="$(mktemp -d)"
 #tvheadend_deb_dst="$temp_folder/tvheadend_deb.deb"
 #tvheadend_deb_url=""
+
 ynh_script_progression --message="Install dtv-scan-tables...." --weight=5
 ynh_exec_warn_less dpkg -i ../sources/dtv-scan-tables_0+git20190925.6d01903-0.1~deb10u1_all.deb
 ynh_script_progression --message="Install tvheadend-data..." --weight=5
@@ -92,24 +101,28 @@ ynh_exec_warn_less dpkg -i ../sources/tvheadend-data_4.2.8-dmo1_all.deb
 
 if [ -n "$(uname -m | grep arm)" ]
 then
-    ynh_script_progression --message="Install tvheadend for armfh..." --weight=5
+    ynh_script_progression --message="Install tvheadend for armhf..." --weight=5
     ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-ynh-armhf.deb
 else [ -n "$(uname -m | grep x86_64)" ]
     ynh_script_progression --message="Install tvheadend for amd64..." --weight=5
     ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_amd64.deb
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # MODIFY TVHEADEND CONFIG FILES
 #=================================================
 # Copy and modify /etc/default/tvheadend
-cp ../conf/tvheadend /etc/default/tvheadend
-ynh_replace_string --match_string="__CONF_DIR__" --replace_string="$final_path/.hts/tvheadend" --target_file="/etc/default/tvheadend"
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="/etc/default/tvheadend"
-ynh_replace_string --match_string="__PATH__" --replace_string="$path_url" --target_file="/etc/default/tvheadend"
-ynh_replace_string --match_string="__STREAM_PORT__" --replace_string="$stream_port" --target_file="/etc/default/tvheadend"
-ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="/etc/default/tvheadend"
-ynh_store_file_checksum --file="/etc/default/tvheadend"
+#cp ../conf/tvheadend /etc/default/tvheadend
+#ynh_replace_string --match_string="__CONF_DIR__" --replace_string="$final_path/.hts/tvheadend" --target_file="/etc/default/tvheadend"
+#ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="/etc/default/tvheadend"
+#ynh_replace_string --match_string="__PATH__" --replace_string="$path_url" --target_file="/etc/default/tvheadend"
+#ynh_replace_string --match_string="__STREAM_PORT__" --replace_string="$stream_port" --target_file="/etc/default/tvheadend"
+#ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="/etc/default/tvheadend"
+#ynh_store_file_checksum --file="/etc/default/tvheadend"
 
 # Copy and modify /home/hts/.hts/tvheadend/superuser
 #siwi muss gemacht werden!!
@@ -127,6 +140,13 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 ynh_add_nginx_config
 
 #=================================================
+# SETUP SYSTEMD
+#=================================================
+ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
+
+ynh_add_systemd_config
+
+#=================================================
 # SETUP LOGROTATE
 #=================================================
 ynh_script_progression --message="Configuring log rotation..." --weight=1
@@ -137,15 +157,25 @@ chmod 666 /var/log/$app.log
 ynh_use_logrotate --logfile=/var/log/$app.log
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
+# INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-yunohost service add $app --log "/var/log/$app.log"
+ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
+
+yunohost service add $app --description="TV streaming server" --log="/var/log/$app/$app.log" --needs_exposed_ports "$stream_port"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
 ynh_script_progression --message="Configuring SSOwat..." --weight=1
-
+# ynh_permission_update --permission="main" --add="visitors"
 ynh_app_setting_set --app=$app --key=skipped_uris --value="/"
 
 #=================================================
@@ -165,9 +195,9 @@ apt-mark hold tvheadend
 #=================================================
 # START TVHEADEND SERVICE
 #=================================================
-ynh_script_progression --message="Starting Tvheadend service..." --weight=1
+#ynh_script_progression --message="Starting Tvheadend service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app.log"
+#ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app.log"
 
 #=================================================
 # END OF SCRIPT
