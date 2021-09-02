@@ -29,7 +29,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 ynh_script_progression --message="Validating installation parameters..." --weight=2
 
-final_path=/home/hts # Default path for Tvheadend deb package siwi: to be changed
+final_path=/home/yunohost.app/hts # Default path for Tvheadend deb package siwi: to be changed
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
 #siwi
