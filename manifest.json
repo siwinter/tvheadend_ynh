@@ -3,18 +3,18 @@
     "id": "tvheadend",
     "packaging_format": 1,
     "description": {
-        "en": "A TV streaming server and recorder",
-        "fr": "Un serveur de streaming et d'enregistrement TV"
+        "en": "TV streaming server and recorder",
+        "fr": "Serveur de streaming et d'enregistrement TV"
     },
     "version": "4.2.8-36~ynh5",
     "url": "https://tvheadend.org",
-    "license": "free",
+    "license": "GPL-3.0-only",
     "maintainer": {
         "name": "Sylvain Cecchetto",
         "email": "cecchetto.sylvain@me.com"
     },
     "requirements": {
-        "yunohost": ">= 3.5"
+        "yunohost": ">= 4.0.0"
     },
     "multi_instance": false,
     "services": [
