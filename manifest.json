@@ -8,13 +8,24 @@
     },
     "version": "4.2.8-36~ynh5",
     "url": "https://tvheadend.org",
+    "upstream": {
+        "license": "GPL-3.0-only",
+        "website": "https://yunohost.org/",
+        "admindoc": "https://tvheadend.org/projects/tvheadend/wiki",
+        "userdoc": "https://tvheadend.org/projects/tvheadend/wiki/Documentation",
+        "code": "https://github.com/tvheadend/tvheadend"
+    },
     "license": "GPL-3.0-only",
     "maintainer": {
+        "name": "Siegfried Winter",
+        "email": "siegfried.winter@arcor.de"
+    },
+    "previous_maintainer": {
         "name": "Sylvain Cecchetto",
         "email": "cecchetto.sylvain@me.com"
     },
     "requirements": {
-        "yunohost": ">= 4.0.0"
+        "yunohost": ">= 4.2.0"
     },
     "multi_instance": false,
     "services": [
@@ -30,8 +41,8 @@
             {
                 "name": "path",
                 "type": "path",
-                "example": "/example",
-                "default": "/example"
+                "example": "/tvh",
+                "default": "/tvh"
             }
         ]
     }
