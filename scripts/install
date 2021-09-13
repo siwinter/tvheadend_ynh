@@ -19,8 +19,8 @@ ynh_abort_if_errors
 #=================================================
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
-superuser=$YNH_APP_ARG_SUPERUSER
-password=$YNH_APP_ARG_PASSWORD
+#superuser=$YNH_APP_ARG_SUPERUSER
+#password=$YNH_APP_ARG_PASSWORD
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -45,8 +45,8 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=superuser --value=$superuser
-ynh_app_setting_set --app=$app --key=password --value=$password
+#ynh_app_setting_set --app=$app --key=superuser --value=$superuser
+#ynh_app_setting_set --app=$app --key=password --value=$password
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 #=================================================
@@ -129,8 +129,8 @@ chown -R $app:www-data "$final_path"
 
 # Copy and modify /home/hts/.hts/tvheadend/superuser
 mkdir -p $final_path/.hts/tvheadend/
-ynh_add_config --template="../conf/superuser" --destination="$final_path/.hts/tvheadend/superuser"
-ynh_store_file_checksum --file="$final_path/.hts/tvheadend/superuser"
+#ynh_add_config --template="../conf/superuser" --destination="$final_path/.hts/tvheadend/superuser"
+#ynh_store_file_checksum --file="$final_path/.hts/tvheadend/superuser"
 
 #cp ../conf/superuser $final_path/.hts/tvheadend/superuser
 #ynh_replace_string --match_string="__SUPERUSER__" --replace_string="$superuser" --target_file="$final_path/.hts/tvheadend/superuser"
