@@ -33,6 +33,7 @@ final_path=/home/yunohost.app/hts # Default path for Tvheadend deb package siwi:
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
 #siwi
+conf_file="siwi_file"
 mkdir $final_path
 
 # Register (book) web path
