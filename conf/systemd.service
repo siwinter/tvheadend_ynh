@@ -4,6 +4,7 @@ After=dbus.service
 After=network.target
 
 [Service]
+Type=forking
 ExecStart=/usr/bin/tvheadend  -l /var/log/__APP__.log -u __APP__ -g video --http_port __PORT__ --htsp_port __STREAM_PORT__ --http_root __PATH_URL__ __ARGS__
 ExecStop=/usr/bin/rm /var/run/tvheadend.pid
 #Restart=always
