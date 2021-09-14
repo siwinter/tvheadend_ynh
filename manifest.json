@@ -43,7 +43,27 @@
                 "type": "path",
                 "example": "/tvh",
                 "default": "/tvh"
+            },
+            {
+                "name": "admin",
+                "type": "user",
+                "ask": {
+                    "en": "Choose an admin user",
+                    "fr": "Choisissez l’administrateur"
+                },
+                "example": "johndoe",
+                "optional": "true"
+            },
+            {
+                "name": "pasword",
+                "type": "password",
+                "ask": {
+                    "en": "Repeat admin's yunohost password",
+                    "fr": "Répéter le mot de passe de yunohost de l'administrateur "
+                },
+                "optional": "true"
             }
+            
         ]
     }
 }
