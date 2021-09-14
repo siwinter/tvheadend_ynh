@@ -32,9 +32,11 @@ ynh_script_progression --message="Validating installation parameters..." --weigh
 final_path=/home/yunohost.app/hts # Default path for Tvheadend deb package siwi: to be changed
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
-#siwi
-conf_file="siwi_file"
 mkdir $final_path
+
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 # Register (book) web path
 ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
@@ -59,8 +61,6 @@ ynh_script_progression --message="Configuring firewall..." --weight=15
 
 # Find a free port for the web server
 port=$(ynh_find_port --port=9981)
-# Open this port
-# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port #siwi: not needed
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 # Find a free port for the streaming server
@@ -78,7 +78,7 @@ if [ -n "$(uname -m | grep arm)" ]
 then
     ynh_install_app_dependencies $pkg_dependencies_arm
 else
-	ynh_install_app_dependencies $pkg_dependencies_x86
+    ynh_install_app_dependencies $pkg_dependencies_x86
 fi
 
 #=================================================
@@ -92,14 +92,9 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 #=================================================
 # INSTALL TVHEADEND DEB PACKAGE
 #=================================================
-
-
-#temp_folder="$(mktemp -d)"
-#tvheadend_deb_dst="$temp_folder/tvheadend_deb.deb"
-#tvheadend_deb_url=""
-
 ynh_script_progression --message="Install dtv-scan-tables...." --weight=5
 ynh_exec_warn_less dpkg -i ../sources/dtv-scan-tables_0+git20190925.6d01903-0.1~deb10u1_all.deb
+
 ynh_script_progression --message="Install tvheadend-data..." --weight=5
 ynh_exec_warn_less dpkg -i ../sources/tvheadend-data_4.2.8-dmo1_all.deb
 
@@ -111,10 +106,6 @@ else [ -n "$(uname -m | grep x86_64)" ]
     ynh_script_progression --message="Install tvheadend for amd64..." --weight=5
     ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_amd64.deb
 fi
-
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
 
 #=================================================
 # MODIFY TVHEADEND CONFIG FILES
@@ -129,7 +120,7 @@ chown -R $app:www-data "$final_path"
 #ynh_store_file_checksum --file="/etc/default/tvheadend"
 
 # Copy and modify /home/hts/.hts/tvheadend/superuser
-mkdir -p $final_path/.hts/tvheadend/
+#mkdir -p $final_path/.hts/tvheadend/
 #ynh_add_config --template="../conf/superuser" --destination="$final_path/.hts/tvheadend/superuser"
 #ynh_store_file_checksum --file="$final_path/.hts/tvheadend/superuser"
 
@@ -161,9 +152,9 @@ ynh_add_systemd_config
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Use logrotate to manage application logfile(s)
-touch /var/log/$app.log
-chmod 666 /var/log/$app.log
-ynh_use_logrotate --logfile=/var/log/$app.log
+touch /var/log/$app/$app.log
+chmod 666 /var/log/$app/$app.log
+ynh_use_logrotate --logfile=/var/log/$app/$app.log
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
