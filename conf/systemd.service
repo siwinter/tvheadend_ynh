@@ -5,7 +5,6 @@ After=network.target
 
 [Service]
 User=__APP__
-Type=forking
 #EnvironmentFile=__CONF_FILE__
 ExecStart=/usr/bin/__APP__  -l /var/log/tvheadend.log -u __APP__ -g video --http_port __PORT__ --htsp_port __STREAM_PORT__ --http_root __PATH_URL__ -f -6 --noacl
 #ExecStart=/usr/bin/__APP__  -u __APP__ -g video -l $TVH_LOG_FILE --http_port $TVH_HTTP_PORT --htsp_port $TVH_STRM_PORT --http_root $TVH_HTTP_ROOT $TVH_OPTIONS
