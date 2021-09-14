@@ -32,11 +32,7 @@ ynh_script_progression --message="Validating installation parameters..." --weigh
 final_path=/home/yunohost.app/hts # Default path for Tvheadend deb package siwi: to be changed
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
-mkdir $final_path
-
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+#mkdir $final_path
 
 # Register (book) web path
 ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
@@ -128,6 +124,10 @@ fi
 #ynh_replace_string --match_string="__SUPERUSER__" --replace_string="$superuser" --target_file="$final_path/.hts/tvheadend/superuser"
 #ynh_replace_string --match_string="__PASSWORD__" --replace_string="$password" --target_file="$final_path/.hts/tvheadend/superuser"
 
+
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 #=================================================
 # NGINX CONFIGURATION
