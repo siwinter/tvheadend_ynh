@@ -32,7 +32,7 @@ ynh_script_progression --message="Validating installation parameters..." --weigh
 final_path=/home/yunohost.app/hts # Default path for Tvheadend deb package siwi: to be changed
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
-#mkdir $final_path
+mkdir $final_path
 
 # Register (book) web path
 ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
