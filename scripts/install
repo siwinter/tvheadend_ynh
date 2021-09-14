@@ -151,6 +151,8 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
 
+args="-f -6 --noacl"
+
 ynh_add_systemd_config
 
 #=================================================
