@@ -152,16 +152,17 @@ ynh_add_systemd_config
 ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Use logrotate to manage application logfile(s)
-touch /var/log/$app/$app.log
-chmod 666 /var/log/$app/$app.log
-ynh_use_logrotate --logfile=/var/log/$app/$app.log
+#mkdir /var/log/$app
+#touch /var/log/$app.log
+#chmod 666 /var/log/$app.log
+ynh_use_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
 
-yunohost service add $app --description="TV streaming server" --log="/var/log/$app/$app.log" --needs_exposed_ports "$stream_port"
+yunohost service add $app --description="TV streaming server" --log="/var/log/$app.log" --needs_exposed_ports "$stream_port"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -169,7 +170,7 @@ yunohost service add $app --description="TV streaming server" --log="/var/log/$a
 ynh_script_progression --message="Starting a systemd service..." --time --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app.log"
 
 #=================================================
 # SETUP SSOWAT
