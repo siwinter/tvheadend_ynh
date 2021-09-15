@@ -11,14 +11,14 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
+ynh_script_progression --message="Loading installation settings..." --time --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
-superuser=$(ynh_app_setting_get --app=$app --key=superuser)
-password=$(ynh_app_setting_get --app=$app --key=password)
+#superuser=$(ynh_app_setting_get --app=$app --key=superuser)
+#password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 stream_port=$(ynh_app_setting_get --app=$app --key=stream_port)
@@ -52,7 +52,7 @@ ynh_script_progression --message="Removing logrotate configuration..." --time --
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
 
-ynh_script_progression --message="Removing $app log file..." --weight=1
+ynh_script_progression --message="Removing $app log file..." --time --weight=1
 
 # Remove the log files
 ynh_secure_remove --file="/var/log/$app.log"
@@ -60,25 +60,25 @@ ynh_secure_remove --file="/var/log/$app.log"
 #=================================================
 # UNHOLD TVHEADEND FROM APT
 #=================================================
-ynh_script_progression --message="Disable prevent Tvheadend being upgraded throught APT..." --weight=2
+ynh_script_progression --message="Disable prevent Tvheadend being upgraded throught APT..." --time --weight=2
 
 apt-mark unhold tvheadend
 
 #=================================================
 # REMOVE TVHEADEND
 #=================================================
-ynh_script_progression --message="Removing tvheadend..." --weight=6
+ynh_script_progression --message="Removing tvheadend..." --time --weight=6
 
 ynh_package_autopurge tvheadend
-ynh_script_progression --message="Removing tvheadend-data..." --weight=6
+ynh_script_progression --message="Removing tvheadend-data..." --time --weight=6
 ynh_package_autopurge tvheadend-data
-ynh_script_progression --message="Removing dtv-scan-tables..." --weight=6
+ynh_script_progression --message="Removing dtv-scan-tables..." --time --weight=6
 ynh_package_autopurge dtv-scan-tables
 
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Removing dependencies..." --weight=3
+ynh_script_progression --message="Removing dependencies..." --time --weight=3
 
 # Remove metapackage and its dependencies
 ynh_remove_app_dependencies
@@ -86,7 +86,7 @@ ynh_remove_app_dependencies
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Removing NGINX web server configuration..." --weight=1
+ynh_script_progression --message="Removing NGINX web server configuration..." --time --weight=1
 
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
@@ -95,16 +95,9 @@ ynh_remove_nginx_config
 # CLOSE TVHEADEND PORTS
 #=================================================
 
-#siwi: port not opened in install script
-#if yunohost firewall list | grep -q "\- $port$"
-#then
-#    ynh_script_progression --message="Closing port $port..." --weight=8
-#    ynh_exec_warn_less yunohost firewall disallow TCP $port
-#fi
-
 if yunohost firewall list | grep -q "\- $stream_port$"
 then
-    ynh_script_progression --message="Closing port $stream_port..." --weight=8
+    ynh_script_progression --message="Closing port $stream_port..." --time --weight=8
     ynh_exec_warn_less yunohost firewall disallow TCP $stream_port
 fi
 
@@ -112,18 +105,18 @@ fi
 #=================================================
 # REMOVE APP MAIN DIR AND CONFIG FILES
 #=================================================
-ynh_script_progression --message="Removing Tvheadend main directory and config files..." --weight=2
+ynh_script_progression --message="Removing Tvheadend main directory and config files..." --time --weight=2
 
 # Remove the app directory securely (/home/hts folder)
-ynh_secure_remove --file="$final_path"
-ynh_secure_remove --file="/etc/default/tvheadend"
+#ynh_secure_remove --file="$final_path"
+#ynh_secure_remove --file="/etc/default/tvheadend"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # REMOVE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Removing the dedicated hts system user..." --weight=1
+ynh_script_progression --message="Removing the dedicated hts system user..." --time --weight=1
 
 # Delete a system user
 ynh_system_user_delete --username=$app
