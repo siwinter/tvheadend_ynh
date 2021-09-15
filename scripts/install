@@ -30,7 +30,7 @@ app=$YNH_APP_INSTANCE_NAME
 ynh_script_progression --message="Validating installation parameters..." --time --weight=2
 
 final_path=/usr/share/tvheadend
-data_path=/home/yunohost.app/hts
+
 test ! -e "$final_path" || ynh_die --message="The path $final_path already contains a folder"
 
 # Register (book) web path
@@ -46,7 +46,6 @@ ynh_app_setting_set --app=$app --key=path --value=$path_url
 #ynh_app_setting_set --app=$app --key=superuser --value=$superuser
 #ynh_app_setting_set --app=$app --key=password --value=$password
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -78,12 +77,26 @@ else
 fi
 
 #=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Creating a data directory..." --time --weight=1
+
+datadir=/home/yunohost.app/hts
+ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+
+mkdir -p $datadir
+
+chmod 750 "$datadir"
+chmod -R o-rwx "$datadir"
+chown -R $app:www-data "$datadir"
+
+#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Configuring system user..." --time --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$data_path"
+ynh_system_user_create --username=$app --home_dir="$datadir"
 
 #=================================================
 # INSTALL TVHEADEND DEB PACKAGE
@@ -102,11 +115,6 @@ else [ -n "$(uname -m | grep x86_64)" ]
     ynh_script_progression --message="Install tvheadend for amd64..." --time --weight=5
     ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_amd64.deb
 fi
-
-mkdir "$data_path"
-chmod 750 "$data_path"
-chmod -R o-rwx "$data_path"
-chown -R $app:www-data "$data_path"
 
 #=================================================
 # NGINX CONFIGURATION
