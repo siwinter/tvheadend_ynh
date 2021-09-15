@@ -24,18 +24,19 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
 #=================================================
 ynh_print_info --message="Declaring files to be backed up..."
 
+
 #=================================================
-# BACKUP THE APP MAIN DIR AND CONFIG FILES
+# BACKUP THE DATA DIR
 #=================================================
 
-ynh_backup --src_path="/etc/default/tvheadend"
-ynh_backup --src_path="$final_path"
+ynh_backup --src_path="$datadir" --is_big
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
@@ -50,7 +51,6 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 
 ynh_backup --src_path="/etc/logrotate.d/$app"
-ynh_backup --src_path="/var/log/$app.log"
 
 #=================================================
 # END OF SCRIPT
