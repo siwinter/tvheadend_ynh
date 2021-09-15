@@ -77,6 +77,14 @@ else
 fi
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..." --time --weight=1
+
+# Create a system user
+ynh_system_user_create --username=$app --home_dir="$datadir"
+
+#=================================================
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Creating a data directory..." --time --weight=1
@@ -89,14 +97,6 @@ mkdir -p $datadir
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
-
-# Create a system user
-ynh_system_user_create --username=$app --home_dir="$datadir"
 
 #=================================================
 # INSTALL TVHEADEND DEB PACKAGE
