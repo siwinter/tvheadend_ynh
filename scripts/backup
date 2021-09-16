@@ -31,6 +31,13 @@ datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 #=================================================
 ynh_print_info --message="Declaring files to be backed up..."
 
+#=================================================
+# BACKUP THE APP MAIN DIRS
+#=================================================
+
+ynh_backup --src_path=/usr/bin/tvheadend
+
+ynh_backup --src_path=/usr/share/tvheadend/
 
 #=================================================
 # BACKUP THE DATA DIR
