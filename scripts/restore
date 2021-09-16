@@ -90,7 +90,7 @@ then
     ynh_die --message="Port $stream_port already open (and maybe used by another application)"
 fi
 
-#ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $stream_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $stream_port
 
 #=================================================
 # SPECIFIC RESTORATION
