@@ -67,13 +67,22 @@ apt-mark unhold tvheadend
 #=================================================
 # REMOVE TVHEADEND
 #=================================================
-ynh_script_progression --message="Removing tvheadend..." --time --weight=6
+#ynh_script_progression --message="Removing tvheadend..." --time --weight=6
 
-ynh_package_autopurge tvheadend
-ynh_script_progression --message="Removing tvheadend-data..." --time --weight=6
-ynh_package_autopurge tvheadend-data
-ynh_script_progression --message="Removing dtv-scan-tables..." --time --weight=6
-ynh_package_autopurge dtv-scan-tables
+#ynh_package_autopurge tvheadend
+#ynh_script_progression --message="Removing tvheadend-data..." --time --weight=6
+#ynh_package_autopurge tvheadend-data
+#ynh_script_progression --message="Removing dtv-scan-tables..." --time --weight=6
+#ynh_package_autopurge dtv-scan-tables
+
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
+ynh_script_progression --message="Removing app main directory..." --time --weight=1
+
+# Remove the app directory securely
+ynh_secure_remove --file=/usr/bin/tvheadend
+ynh_secure_remove --file=/usr/share/tvheadend/
 
 #=================================================
 # REMOVE DEPENDENCIES
