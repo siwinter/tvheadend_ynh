@@ -56,6 +56,15 @@ ynh_script_progression --message="Recreating the dedicated system user..." --tim
 ynh_system_user_create --username=$app --home_dir="$datadir"
 
 #=================================================
+# RESTORE THE MAIN DIRS
+#=================================================
+ynh_script_progression --message="Restoring the main directory..." --time --weight=1
+
+ynh_restore_file --origin_path=/usr/bin/tvheadend
+
+ynh_restore_file --origin_path=/usr/share/tvheadend/
+
+#=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Restoring the data directory..." --time --weight=1
