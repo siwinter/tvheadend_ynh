@@ -68,7 +68,7 @@
             {
                 "name": "password",
                 "type": "string",
-                "optional": "true",
+                "default": "***",
                 "ask": {
                     "en": "Set the superuser's yunohost password",
                     "fr": "Définir le mot de passe yunohost du superutilisateur "
