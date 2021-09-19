@@ -29,7 +29,8 @@ tvh_priv=YNH_ARG_TVH_PRIV
 #fi
 
 
-if [ $tvh_priv -eq 1 ]
+#if [ $tvh_priv -eq 1 ]
+if [ $tvh_priv]
 then
     args="-f -6"
     superuser=$YNH_APP_ARG_SUPERUSER
