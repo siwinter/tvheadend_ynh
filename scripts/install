@@ -156,6 +156,7 @@ ynh_add_systemd_config
 if [ $tvh_priv -eq 1 ]
 then
     ynh_script_progression --message="Setup config file..."
+    mkdir -p "$datadir/.hts/tvheadend"
     ynh_add_config --template="../conf/superuser" --destination="$datadir/.hts/tvheadend/superuser"
 fi
 
