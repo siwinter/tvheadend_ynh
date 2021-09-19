@@ -43,6 +43,39 @@
                 "type": "path",
                 "example": "/tvh",
                 "default": "/tvh"
+            },
+            {
+                "name": "tvh_priv",
+                "type": "boolean",
+                "ask": {
+                    "en": "Want to configure user privileges for tvheadend? ",
+                    "fr": "voulez-vous configurer des privilèges d'utilisateur pour tvheadend? "
+                },
+                "default": false
+            },
+            {
+                "name": "superuser",
+                "type": "user",
+                "ask": {
+                    "en": "Choose a yunohost user to be tvheadend's superuser",
+                    "fr": "Choisissez le nom du superutilisateur pour la connexion à Tvheadend"
+                },
+                "help": {
+                    "en": "Necessary if you want to configure user privileges in tvheadend.",
+                    "fr": "Nécessaire si vous souhaitez configurer les privilèges des utilisateurs dans tvheadend."
+                }
+            },
+            {
+                "name": "password",
+                "type": "string",
+                "ask": {
+                    "en": "Set the superuser's yunohost password",
+                    "fr": "Définir le mot de passe yunohost du superutilisateur "
+                },
+                "help": {
+                    "en": "Set the same password you use for yunohost.",
+                    "fr": "Définissez le même mot de passe que vous utilisez pour yunohost."
+                }
             }
         ]
     }
