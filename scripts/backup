@@ -35,9 +35,10 @@ ynh_print_info --message="Declaring files to be backed up..."
 # BACKUP THE APP MAIN DIRS
 #=================================================
 
-ynh_backup --src_path=/usr/bin/tvheadend
+ynh_backup --src_path=$final_path
 
 ynh_backup --src_path=/usr/share/tvheadend/
+ynh_backup --src_path=/usr/share/dvb/
 
 #=================================================
 # BACKUP THE DATA DIR
