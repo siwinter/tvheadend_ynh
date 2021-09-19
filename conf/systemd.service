@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=__final_path__/tvheadend  -l __LOG_FILE__ -u __APP__ -g video --http_port __PORT__ --htsp_port __STREAM_PORT__ --http_root __PATH_URL__ __ARGS__
+ExecStart=__FINAL_PATH__/tvheadend  -l __LOG_FILE__ -u __APP__ -g video --http_port __PORT__ --htsp_port __STREAM_PORT__ --http_root __PATH_URL__ __ARGS__
 ExecStop=/usr/bin/rm /var/run/tvheadend.pid
 #Restart=always
 #RestartSec=5
