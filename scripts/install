@@ -22,10 +22,20 @@ path_url=$YNH_APP_ARG_PATH
 tvh_priv=YNH_ARG_TVH_PRIV
 
 #if [ $tvh_priv -eq 1 ]
-if [ $tvh_priv -ne 0 ]
+#if [ $tvh_priv -ne 0 ]
+#then
+#    superuser=$YNH_APP_ARG_SUPERUSER
+#    password=$YNH_APP_ARG_PASSWORD
+#fi
+
+
+if [ $tvh_priv -eq 1 ]
 then
+    args="-f -6"
     superuser=$YNH_APP_ARG_SUPERUSER
     password=$YNH_APP_ARG_PASSWORD
+else
+    args="-f -6 --noacl"
 fi
 
 app=$YNH_APP_INSTANCE_NAME
