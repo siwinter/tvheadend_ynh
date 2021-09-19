@@ -175,13 +175,6 @@ ynh_script_progression --message="Reloading NGINX web server..." --time --weight
 ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
-# PREVENT TVHEADEND BEING UPGRADED THROUGHT APT
-#=================================================
-ynh_script_progression --message="Prevent Tvheadend being upgraded throught APT..." --time --weight=1
-
-apt-mark hold tvheadend
-
-#=================================================
 # END OF SCRIPT
 #=================================================
 ynh_script_progression --message="Installation of Tvheadend completed, HTTP port is $port and HTSP port is $stream_port" --last
