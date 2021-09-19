@@ -19,8 +19,13 @@ ynh_abort_if_errors
 #=================================================
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
-#superuser=$YNH_APP_ARG_SUPERUSER
-#password=$YNH_APP_ARG_PASSWORD
+tvh_priv=YNH_ARG_TVH_PRIV
+
+if [ $tvh_priv -eq 1 ]
+then
+	superuser=$YNH_APP_ARG_SUPERUSER
+    password=$YNH_APP_ARG_PASSWORD
+fi
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -129,10 +134,21 @@ ynh_add_nginx_config
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=6
+args="-f -6"
+if [ $tvh_priv -eq 0 ]
+then
+	args="$args --noacl"
+fi
 
-args="-f -6 --noacl"
 log_file="/var/log/$app.log"
 ynh_add_systemd_config
+
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Setup config file..."
+
+ynh_add_config --template="../conf/superuser" --destination="$datadir/.hts/tvheadend/superuser"
 
 #=================================================
 # SETUP LOGROTATE
