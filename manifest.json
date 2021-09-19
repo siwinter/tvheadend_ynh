@@ -56,7 +56,6 @@
             {
                 "name": "superuser",
                 "type": "user",
-                "optional": "true",
                 "ask": {
                     "en": "Choose a yunohost user to be tvheadend's superuser",
                     "fr": "Choisissez le nom du superutilisateur pour la connexion à Tvheadend"
