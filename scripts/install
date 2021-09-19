@@ -21,7 +21,8 @@ domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 tvh_priv=YNH_ARG_TVH_PRIV
 
-if [ $tvh_priv -eq 1 ]
+#if [ $tvh_priv -eq 1 ]
+if [ $tvh_priv -ne 0 ]
 then
     superuser=$YNH_APP_ARG_SUPERUSER
     password=$YNH_APP_ARG_PASSWORD
