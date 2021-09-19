@@ -65,19 +65,6 @@
                     "en": "Necessary if you want to configure user privileges in tvheadend.",
                     "fr": "Nécessaire si vous souhaitez configurer les privilèges des utilisateurs dans tvheadend."
                 }
-            },
-            {
-                "name": "password",
-                "type": "string",
-                "optional": "true",
-                "ask": {
-                    "en": "Set the superuser's yunohost password",
-                    "fr": "Définir le mot de passe yunohost du superutilisateur "
-                },
-                "help": {
-                    "en": "Set the same password you use for yunohost.",
-                    "fr": "Définissez le même mot de passe que vous utilisez pour yunohost."
-                }
             }
         ]
     }
