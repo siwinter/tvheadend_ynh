@@ -23,7 +23,7 @@ tvh_priv=YNH_ARG_TVH_PRIV
 
 if [ $tvh_priv -eq 1 ]
 then
-	superuser=$YNH_APP_ARG_SUPERUSER
+    superuser=$YNH_APP_ARG_SUPERUSER
     password=$YNH_APP_ARG_PASSWORD
 fi
 
@@ -135,9 +135,11 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=6
 args="-f -6"
-if [ $tvh_priv -eq 0 ]
+if [ $tvh_priv -eq 1 ]
 then
-	args="$args --noacl"
+    args="-f -6"
+else
+    args="-f -6 --noacl"
 fi
 
 log_file="/var/log/$app.log"
@@ -146,9 +148,11 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Setup config file..."
-
-ynh_add_config --template="../conf/superuser" --destination="$datadir/.hts/tvheadend/superuser"
+if [ $tvh_priv -eq 1 ]
+then
+    ynh_script_progression --message="Setup config file..."
+    ynh_add_config --template="../conf/superuser" --destination="$datadir/.hts/tvheadend/superuser"
+fi
 
 #=================================================
 # SETUP LOGROTATE
