@@ -58,35 +58,12 @@ ynh_script_progression --message="Removing $app log file..." --time --weight=1
 ynh_secure_remove --file="/var/log/$app.log"
 
 #=================================================
-# UNHOLD TVHEADEND FROM APT
-#=================================================
-ynh_script_progression --message="Disable prevent Tvheadend being upgraded throught APT..." --time --weight=2
-
-apt-mark unhold tvheadend
-
-#=================================================
 # REMOVE TVHEADEND
 #=================================================
-#ynh_script_progression --message="Removing tvheadend..." --time --weight=6
-
-#ynh_package_autopurge tvheadend
 #ynh_script_progression --message="Removing tvheadend-data..." --time --weight=6
 #ynh_package_autopurge tvheadend-data
 #ynh_script_progression --message="Removing dtv-scan-tables..." --time --weight=6
 #ynh_package_autopurge dtv-scan-tables
-
-#=================================================
-# REMOVE APP MAIN DIR
-#=================================================
-ynh_script_progression --message="Removing app main directory..." --time --weight=1
-
-# Remove the app directory securely
-#ynh_secure_remove --file=/usr/share/dvb
-#ynh_secure_remove --file=/usr/share/tvheadend
-ynh_secure_remove --file=$final_path
-
-ynh_package_autopurge dtv-scan-tables
-ynh_package_autopurge tvheadend-data
 
 #=================================================
 # REMOVE DEPENDENCIES
@@ -95,6 +72,16 @@ ynh_script_progression --message="Removing dependencies..." --time --weight=3
 
 # Remove metapackage and its dependencies
 ynh_remove_app_dependencies
+
+ynh_package_autopurge dtv-scan-tables
+ynh_package_autopurge tvheadend-data
+
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
+ynh_script_progression --message="Removing app main directory..." --time --weight=1
+
+ynh_secure_remove --file=$final_path
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
