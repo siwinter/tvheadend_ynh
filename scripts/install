@@ -30,7 +30,7 @@ tvh_priv=YNH_ARG_TVH_PRIV
 
 
 #if [ $tvh_priv -eq 1 ]
-if [ $tvh_priv]
+if [ $tvh_priv ]:
 then
     args="-f -6"
     superuser=$YNH_APP_ARG_SUPERUSER
@@ -44,7 +44,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
+ynh_script_progression --message="Validating installation parameters.. $tvh_priv ." --weight=1
 
 final_path=/opt/yunohost/tvheadend
 
