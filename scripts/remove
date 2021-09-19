@@ -83,6 +83,7 @@ ynh_script_progression --message="Removing app main directory..." --time --weigh
 # Remove the app directory securely
 ynh_secure_remove --file=/usr/bin/tvheadend
 ynh_secure_remove --file=/usr/share/tvheadend
+ynh_secure_remove --file=$"final_path"
 
 #=================================================
 # REMOVE DEPENDENCIES
