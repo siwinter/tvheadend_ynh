@@ -145,13 +145,7 @@ ynh_add_nginx_config
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=6
-args="-f -6"
-if [ $tvh_priv -eq 1 ]
-then
-    args="-f -6"
-else
-    args="-f -6 --noacl"
-fi
+#args="-f -6 --noacl"
 
 log_file="/var/log/$app.log"
 ynh_add_systemd_config
