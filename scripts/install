@@ -27,7 +27,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --time --weight=2
+ynh_script_progression --message="Validating installation parameters..." --weight=1
 
 final_path=/opt/yunohost/tvheadend
 
@@ -39,7 +39,7 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --time --weight=2
+ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
@@ -52,7 +52,7 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 #=================================================
 # FIND AND OPEN PORTS
 #=================================================
-ynh_script_progression --message="Configuring firewall..." --time --weight=15
+ynh_script_progression --message="Configuring firewall..."  --weight=4
 
 # Find a free port for the web server
 port=$(ynh_find_port --port=9981)
@@ -67,7 +67,7 @@ ynh_app_setting_set --app=$app --key=stream_port --value=$stream_port
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --time --weight=15
+ynh_script_progression --message="Installing dependencies..." --weight=44
 
 if [ -n "$(uname -m | grep arm)" ]
 then
@@ -79,7 +79,7 @@ fi
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=2
 
 # datadir is homedir as tvheadend stores all data in home dir
 datadir=/home/yunohost.app/hts
@@ -91,7 +91,7 @@ ynh_system_user_create --username=$app --home_dir="$datadir"
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Creating a data directory..." --time --weight=1
+ynh_script_progression --message="Creating a data directory..." --weight=1
 
 mkdir -p $datadir
 
@@ -102,25 +102,25 @@ chown -R $app:www-data "$datadir"
 #=================================================
 # INSTALL TVHEADEND
 #=================================================
-ynh_script_progression --message="Install dtv-scan-tables...." --time --weight=5
+ynh_script_progression --message="Install dtv-scan-tables...." --weight=8
 ynh_exec_warn_less dpkg -i ../sources/dtv-scan-tables_0+git20190925.6d01903-0.1~deb10u1_all.deb
 
-ynh_script_progression --message="Install tvheadend-data..." --time --weight=5
+ynh_script_progression --message="Install tvheadend-data..." --weight=5
 ynh_exec_warn_less dpkg -i ../sources/tvheadend-data_4.2.8-dmo1_all.deb
 
 if [ -n "$(uname -m | grep arm)" ]
 then
-    ynh_script_progression --message="Unzip tvheadend for armhf..." --time --weight=5
+    ynh_script_progression --message="Unzip tvheadend for armhf..." --weight=2
     unzip -quo ../sources/tvheadend_4.2.8-dmo1_armhf.zip -d "$final_path"
 else [ -n "$(uname -m | grep x86_64)" ]
-    ynh_script_progression --message="Unzip tvheadend for amd64..." --time --weight=5
+    ynh_script_progression --message="Unzip tvheadend for amd64..." --weight=2
     unzip -quo ../sources/tvheadend_4.2.8-dmo1_amd64.zip -d "$final_path"
 fi
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --time --weight=2
+ynh_script_progression --message="Configuring NGINX web server..." --weight=4
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
@@ -128,7 +128,7 @@ ynh_add_nginx_config
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
+ynh_script_progression --message="Configuring a systemd service..." --weight=6
 
 args="-f -6 --noacl"
 log_file="/var/log/$app.log"
@@ -137,7 +137,7 @@ ynh_add_systemd_config
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..." --time --weight=1
+ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Use logrotate to manage application logfile(s)
 #mkdir /var/log/$app
@@ -148,14 +148,14 @@ ynh_use_logrotate --logfile="$log_file"
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add $app --description="TV streaming server" --log="$log_file" --needs_exposed_ports "$stream_port"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="$log_file"
@@ -163,14 +163,14 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="$log_file"
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --time --weight=1
+ynh_script_progression --message="Configuring SSOwat..." --weight=1
 
 ynh_app_setting_set --app=$app --key=skipped_uris --value="/"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
