@@ -1,5 +1,7 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="La 1" tvg-id="La1.es" group-title="IPTV-ES" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/tv/daserstehd.png",Das Erste HD
-pipe://ffmpeg -loglevel fatal -i https://mcdn.daserste.de/daserste/de/master.m3u8 -vcodec copy -acodec copy -metadata service_name=Das\ Erste\ HD -metadata service_provider=IPTV-DE -mpegts_service_type advanced_codec_digital_hdtv -f mpegts pipe:1
-#EXTINF:-1 tvg-name="ZDF HD" tvg-id="ZDF.de" group-title="IPTV-DE" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/tv/zdfhd.png",ZDF HD
-pipe://ffmpeg -loglevel fatal -i https://zdf-hls-15.akamaized.net/hls/live/2016498/de/veryhigh/master.m3u8 -vcodec copy -acodec copy -metadata service_name=ZDF\ HD -metadata service_provider=IPTV-DE -mpegts_service_type advanced_codec_digital_hdtv -f mpegts pipe:1
+#EXTINF:-1 tvg-name="La 1" tvg-id="La1.es" group-title="IPTV-ES" tvg-logo="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/iptv/la1.jpeg",La 1
+pipe://ffmpeg -loglevel fatal -i https://rtvelivestreamv3.akamaized.net/la1_main_dvr.m3u8 -vcodec copy -acodec copy -metadata service_name=La\ 1 -metadata service_provider=IPTV-ES -mpegts_service_type advanced_codec_digital_hdtv -f mpegts pipe:1
+#EXTINF:-1 tvg-name="La 2" tvg-id="La2.es" group-title="IPTV-ES" tvg-logo="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/iptv/la2.jpeg",La 2
+pipe://ffmpeg -loglevel fatal -i https://rtvelivestreamv3.akamaized.net/la2_main_dvr.m3u8 -vcodec copy -acodec copy -metadata service_name=La\ 2 -metadata service_provider=IPTV-ES -mpegts_service_type advanced_codec_digital_hdtv -f mpegts pipe:1
+#EXTINF:-1 tvg-name="24 h" tvg-id="24h.es" group-title="IPTV-ES" tvg-logo="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/iptv/24h.jpeg",24 h
+pipe://ffmpeg -loglevel fatal -i https://rtvelivestreamv3.akamaized.net/24h_main_dvr.m3u8 -vcodec copy -acodec copy -metadata service_name=24\ h -metadata service_provider=IPTV-ES -mpegts_service_type advanced_codec_digital_hdtv -f mpegts pipe:1
