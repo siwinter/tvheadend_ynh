@@ -21,8 +21,8 @@ if [ -n "$(uname -m | grep arm)" ]
         tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_amd64.zip"
 fi
 
-tvheadend-data_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend-data_4.2.8-dmo1_all.deb"
-dtv-scan-tables_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/dtv-scan-tables_0%2Bgit20190925.6d01903-0.1%7Edeb10u1_all.deb"
+tvheadend-data_deb_url=https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend-data_4.2.8-dmo1_all.deb
+dtv-scan-tables_deb_url=https://github.com/siwinter/tvheadend_ynh/raw/master/sources/dtv-scan-tables_0%2Bgit20190925.6d01903-0.1%7Edeb10u1_all.deb
 
 
 myynh_install() {
@@ -38,7 +38,7 @@ myynh_install() {
     ynh_script_progression --message="Downloading Tvheadend..." --weight=5
     
     temp_folder="$(mktemp -d)"
-    tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
+    tvheadend-data_dev_dst=$temp_folder/tvheadend-data.deb
     dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
     tvheadend_zip_dest="$temp_folder/tvheadend.zip"
     ynh_exec_quiet "wget -q -O $tvheadend-data_deb_dst $tvheadend-data_deb_url"
