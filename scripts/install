@@ -85,15 +85,7 @@ ynh_app_setting_set --app=$app --key=stream_port --value=$stream_port
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=44
 
-myynh_install
-#ynh_install_app_dependencies $pkg_dependencies
-
-#if [ -n "$(uname -m | grep arm)" ]
-#then
-#    ynh_install_app_dependencies $pkg_dependencies_arm
-#else
-#    ynh_install_app_dependencies $pkg_dependencies_x86
-#fi
+ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE DEDICATED USER
@@ -117,6 +109,21 @@ mkdir -p $datadir
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
+
+#=================================================
+# DOWNLOAD TVHEADEND PACKAGES
+#=================================================
+ynh_script_progression --m essage="Downloading Tvheadend..." --weight=5
+    
+temp_folder="$(mktemp -d)"
+tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
+dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
+tvheadend_zip_dest="$temp_folder/tvheadend.zip"
+ynh_exec_quiet "wget -q -O $tvheadend-data_deb_dst $tvheadend-data_deb_url"
+ynh_exec_quiet "wget -q -O $dtv-scan-tables_deb_dst $dtv-scan-tables_deb_url"
+    
+ynh_exec_quiet "wget -q -O $tvheadend_zip_dst $tvheadend_zip_url"
+    
 
 #=================================================
 # INSTALL TVHEADEND
