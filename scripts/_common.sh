@@ -15,19 +15,19 @@ pkg_dependencies_arm="libavahi-client3 libavahi-common3 libavcodec58 libavformat
 
 tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_armhf.zip"
 # set dependencies and url of tvhead due to architecture 
-#if [ -n "$(uname -m | grep arm)" ]
-#    then
-#        pkg_dependencies="libavahi-client3 libavahi-common3 libavcodec58 libavformat58 libavfilter7 libavformat58 \
-#                      libavresample4 libavutil56 libc6 libdbus-1-3 libdvbcsa1 libhdhomerun4 libssl1.1 liburiparser1 zlib1g  \
-#                      adduser lsb-base dvb-apps"
+if [ -n "$(uname -m | grep arm)" ]
+    then
+        pkg_dependencies="libavahi-client3 libavahi-common3 libavcodec58 libavformat58 libavfilter7 libavformat58 \
+                      libavresample4 libavutil56 libc6 libdbus-1-3 libdvbcsa1 libhdhomerun4 libssl1.1 liburiparser1 zlib1g  \
+                      adduser lsb-base dvb-apps"
                       
-#        tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_armhf.zip"
-#    else
-#        pkg_dependencies="libavahi-client3 libavahi-common3 libc6 libdbus-1-3 libssl1.1 libstdc++6 liburiparser1 zlib1g \
-#                      dvb-apps bzip2"
+        tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_armhf.zip"
+    else
+        pkg_dependencies="libavahi-client3 libavahi-common3 libc6 libdbus-1-3 libssl1.1 libstdc++6 liburiparser1 zlib1g \
+                      dvb-apps bzip2"
                       
-#        tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_amd64.zip"
-#    fi
+        tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_amd64.zip"
+fi
 
 tvheadend-data_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend-data_4.2.8-dmo1_all.deb"
 dtv-scan-tables_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/dtv-scan-tables_0%2Bgit20190925.6d01903-0.1%7Edeb10u1_all.deb"
@@ -40,8 +40,8 @@ myynh_install() {
     #=================================================
     ynh_script_progression --message="Installing dependencies..." --weight=44
     
-#    ynh_install_app_dependencies $pkg_dependencies
-    ynh_install_app_dependencies $pkg_dependencies_arm
+    ynh_install_app_dependencies $pkg_dependencies
+
     #=================================================
     # DOWNLOAD TVHEADEND PACKAGES
     #=================================================
