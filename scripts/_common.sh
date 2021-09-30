@@ -35,14 +35,14 @@ myynh_install() {
     #=================================================
     # INSTALL DEPENDENCIES
     #=================================================
-    ynh_script_progression --message="Installing dependencies..." --weight=44
+    #ynh_script_progression --message="Installing dependencies..." --weight=44
   
     #ynh_install_app_dependencies $pkg_dependencies
     
     #=================================================
     # DOWNLOAD TVHEADEND PACKAGES
     #=================================================
-    ynh_script_progression --m essage="Downloading Tvheadend..." --weight=5
+    #ynh_script_progression --m essage="Downloading Tvheadend..." --weight=5
     
     #temp_folder="$(mktemp -d)"
     #tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
