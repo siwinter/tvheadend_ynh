@@ -133,7 +133,7 @@ chown -R $app:www-data "$datadir"
 #    unzip -quo ../sources/tvheadend_4.2.8-dmo1_amd64.zip -d "$final_path"
 #fi
 
-myynh_install()
+myynh_install
 
 #=================================================
 # NGINX CONFIGURATION
