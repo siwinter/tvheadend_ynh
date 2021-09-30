@@ -36,11 +36,8 @@ myynh_install() {
     # INSTALL DEPENDENCIES
     #=================================================
     ynh_script_progression --message="Installing dependencies..." --weight=44
- 
- pkg_dependencies_arm="libavahi-client3"
- 
- 
-    ynh_install_app_dependencies $pkg_dependencies_arm
+  
+    #ynh_install_app_dependencies $pkg_dependencies
     
     #=================================================
     # DOWNLOAD TVHEADEND PACKAGES
@@ -59,16 +56,16 @@ myynh_install() {
     #=================================================
     # INSTALL TVHEADEND DEB PACKAGES
     #=================================================
-    #ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
+    ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
     #ynh_exec_warn_less dpkg -i $tvheadend-data_deb_dst
 
-    #ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
+    ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
     #ynh_exec_warn_less dpkg -i $dtv-scan-tables_deb_dst
     
     #=================================================
     # UNZIP TVHEADEND
     #=================================================
-    #ynh_script_progression --message="Unzip tvheadend ..." --weight=2
+    ynh_script_progression --message="Unzip tvheadend ..." --weight=2
     
     #unzip -quo $tvheadend_zip_dst -d "$final_path"
   
