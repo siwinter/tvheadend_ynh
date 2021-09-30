@@ -31,9 +31,7 @@ myynh_install() {
     # INSTALL DEPENDENCIES
     #=================================================
     ynh_script_progression --message="Installing dependencies..." --weight=44
-    
     ynh_install_app_dependencies $pkg_dependencies
-
     #=================================================
     # DOWNLOAD TVHEADEND PACKAGES
     #=================================================
