@@ -28,13 +28,9 @@ if [ -n "$(uname -m | grep arm)" ]
         tvheadend_zip_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend_4.2.8-dmo1_amd64.zip"
     fi
 
-
-
 tvheadend-data_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/tvheadend-data_4.2.8-dmo1_all.deb"
 dtv-scan-tables_deb_url="https://github.com/siwinter/tvheadend_ynh/raw/master/sources/dtv-scan-tables_0%2Bgit20190925.6d01903-0.1%7Edeb10u1_all.deb"
 
-
-tvheadend_url="
 
 myynh_install() {
     
