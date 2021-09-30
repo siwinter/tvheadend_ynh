@@ -38,36 +38,36 @@ myynh_install() {
     ynh_script_progression --message="Installing dependencies..." --weight=44
     
     ynh_install_app_dependencies $pkg_dependencies
-
+    
     #=================================================
     # DOWNLOAD TVHEADEND PACKAGES
     #=================================================
     ynh_script_progression --m essage="Downloading Tvheadend..." --weight=5
     
-    temp_folder="$(mktemp -d)"
-    tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
-    dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
-    tvheadend_zip_dest="$temp_folder/tvheadend.zip"
-    ynh_exec_quiet "wget -q -O $tvheadend-data_deb_dst $tvheadend-data_deb_url"
-    ynh_exec_quiet "wget -q -O $dtv-scan-tables_deb_dst $dtv-scan-tables_deb_url"
+    #temp_folder="$(mktemp -d)"
+    #tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
+    #dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
+    #tvheadend_zip_dest="$temp_folder/tvheadend.zip"
+    #ynh_exec_quiet "wget -q -O $tvheadend-data_deb_dst $tvheadend-data_deb_url"
+    #ynh_exec_quiet "wget -q -O $dtv-scan-tables_deb_dst $dtv-scan-tables_deb_url"
     
-    ynh_exec_quiet "wget -q -O $tvheadend_zip_dst $tvheadend_zip_url"
+    #ynh_exec_quiet "wget -q -O $tvheadend_zip_dst $tvheadend_zip_url"
     
     #=================================================
     # INSTALL TVHEADEND DEB PACKAGES
     #=================================================
-    ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
-    ynh_exec_warn_less dpkg -i $tvheadend-data_deb_dst
+    #ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
+    #ynh_exec_warn_less dpkg -i $tvheadend-data_deb_dst
 
-    ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
-    ynh_exec_warn_less dpkg -i $dtv-scan-tables_deb_dst
+    #ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
+    #ynh_exec_warn_less dpkg -i $dtv-scan-tables_deb_dst
     
     #=================================================
     # UNZIP TVHEADEND
     #=================================================
-    ynh_script_progression --message="Unzip tvheadend ..." --weight=2
+    #ynh_script_progression --message="Unzip tvheadend ..." --weight=2
     
-    unzip -quo $tvheadend_zip_dst -d "$final_path"
+    #unzip -quo $tvheadend_zip_dst -d "$final_path"
   
-    ynh_secure_remove --file="$temp_folder"
+    #ynh_secure_remove --file="$temp_folder"
 }
