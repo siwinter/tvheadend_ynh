@@ -83,9 +83,9 @@ ynh_app_setting_set --app=$app --key=stream_port --value=$stream_port
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=44
+#ynh_script_progression --message="Installing dependencies..." --weight=44
 
-ynh_install_app_dependencies $pkg_dependencies
+#ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE DEDICATED USER
@@ -111,23 +111,11 @@ chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
 
 #=================================================
-# DOWNLOAD TVHEADEND PACKAGES
-#=================================================
-ynh_script_progression --m essage="Downloading Tvheadend..." --weight=5
-    
-temp_folder="$(mktemp -d)"
-tvheadend-data_dev_dst="$temp_folder/tvheadend-data.deb"
-dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
-tvheadend_zip_dest="$temp_folder/tvheadend.zip"
-ynh_exec_quiet "wget -q -O $tvheadend-data_deb_dst $tvheadend-data_deb_url"
-ynh_exec_quiet "wget -q -O $dtv-scan-tables_deb_dst $dtv-scan-tables_deb_url"
-    
-ynh_exec_quiet "wget -q -O $tvheadend_zip_dst $tvheadend_zip_url"
-    
-
-#=================================================
 # INSTALL TVHEADEND
 #=================================================
+
+myynh_install
+
 ynh_script_progression --message="Install dtv-scan-tables...." --weight=8
 ynh_exec_warn_less dpkg -i ../sources/dtv-scan-tables_0+git20190925.6d01903-0.1~deb10u1_all.deb
 
