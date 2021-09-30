@@ -85,7 +85,8 @@ ynh_app_setting_set --app=$app --key=stream_port --value=$stream_port
 #=================================================
 ynh_script_progression --message="Installing dependencies...$pkg_dependencies" --weight=44
 
-ynh_install_app_dependencies $pkg_dependencies
+myynh_install
+#ynh_install_app_dependencies $pkg_dependencies
 
 #if [ -n "$(uname -m | grep arm)" ]
 #then
