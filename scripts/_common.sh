@@ -18,7 +18,7 @@ if [ -n "$(uname -m | grep arm)" ]
         pkg_dependencies="libavahi-client3 libavahi-common3 libc6 libdbus-1-3 libssl1.1 libstdc++6 liburiparser1 zlib1g \
                       dvb-apps bzip2"
                       
-        tvheadend_zip_url=""$sources_url/tvheadend_4.2.8-dmo1_amd64.zip"
+        tvheadend_zip_url="$sources_url/tvheadend_4.2.8-dmo1_amd64.zip"
 fi
 
 tvheadend-data_deb_url="$sources_url/tvheadend-data_4.2.8-dmo1_all.deb"
