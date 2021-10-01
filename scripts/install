@@ -83,9 +83,9 @@ ynh_app_setting_set --app=$app --key=stream_port --value=$stream_port
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-#ynh_script_progression --message="Installing dependencies..." --weight=44
+#ynh_script_progression --message="Installing ..." --weight=44
 
-#ynh_install_app_dependencies $pkg_dependencies
+#myynh_install
 
 #=================================================
 # CREATE DEDICATED USER
@@ -113,7 +113,7 @@ chown -R $app:www-data "$datadir"
 #=================================================
 # INSTALL TVHEADEND
 #=================================================
-
+ynh_script_progression --message="Install ...." --weight=8
 myynh_install
 
 #ynh_script_progression --message="Install dtv-scan-tables...." --weight=8
