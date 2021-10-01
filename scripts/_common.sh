@@ -38,29 +38,29 @@ myynh_install() {
     ynh_script_progression --message="Downloading Tvheadend..." --weight=5
     
     temp_folder="$(mktemp -d)"
-#    tvheadend-data_dev_dst=$temp_folder/tvheadend-data.deb
-#    dtv-scan-tables_deb_dst="$temp_folder/dtv-scan-tables.deb"
-#    tvheadend_zip_dest="$temp_folder/tvheadend.zip"
-    ynh_exec_quiet "wget -q -O $temp_folder/tvheadend_data.deb $tvheadend_data_deb_url"
-    ynh_exec_quiet "wget -q -O $temp_folder/dtv_scan_tables.deb $dtv_scan_tables_deb_url"
+    tvheadend_data_deb=$temp_folder/tvheadend_data.deb
+    dtv_scan_tables_deb="$temp_folder/dtv_scan_tables.deb"
+    tvheadend_zip="$temp_folder/tvheadend.zip"
     
-    ynh_exec_quiet "wget -q -O $temp_folder/tvheadend.zip $tvheadend_zip_url"
+    ynh_exec_quiet "wget -q -O $tvheadend_data_deb $tvheadend_data_deb_url"
+    ynh_exec_quiet "wget -q -O $dtv_scan_tables_deb $dtv_scan_tables_deb_url"
+    ynh_exec_quiet "wget -q -O $tvheadend_zip $tvheadend_zip_url"
     
     #=================================================
     # INSTALL TVHEADEND DEB PACKAGES
     #=================================================
     ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
-    #ynh_exec_warn_less dpkg -i $tvheadend-data_deb_dst
+    ynh_exec_warn_less dpkg -i $tvheadend_data_deb
 
     ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
-    #ynh_exec_warn_less dpkg -i $dtv-scan-tables_deb_dst
+    ynh_exec_warn_less dpkg -i $dtv_scan_tables_deb
     
     #=================================================
     # UNZIP TVHEADEND
     #=================================================
     ynh_script_progression --message="Unzip tvheadend ..." --weight=2
     
-    #unzip -quo $tvheadend_zip_dst -d "$final_path"
+    unzip -quo $tvheadend_zip -d "$final_path"
   
-    #ynh_secure_remove --file="$temp_folder"
+    ynh_secure_remove --file="$temp_folder"
 }
