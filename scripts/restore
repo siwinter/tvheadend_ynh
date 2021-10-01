@@ -99,9 +99,9 @@ ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $stream_port
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
-# INSTALL DEPENDENCIES
+# INSTALL DEPENDENCIES AND APP
 #=================================================
-ynh_script_progression --message="Installing ..." --weight=7
+ynh_script_progression --message="Installing dependencies and app..." --weight=7
 
 myynh_install
 
