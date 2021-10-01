@@ -95,7 +95,7 @@ chown -R $app:www-data "$datadir"
 #=================================================
 # INSTALL TVHEADEND
 #=================================================
-ynh_script_progression --message="Install ...." --weight=8
+ynh_script_progression --message="Installing dependencies and app ...." --weight=8
 myynh_install
 
 #=================================================
