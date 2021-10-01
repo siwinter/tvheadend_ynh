@@ -17,8 +17,6 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
-#superuser=$(ynh_app_setting_get --app=$app --key=superuser)
-#password=$(ynh_app_setting_get --app=$app --key=password)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 stream_port=$(ynh_app_setting_get --app=$app --key=stream_port)
@@ -52,37 +50,11 @@ ynh_script_progression --message="Stopping Tvheadend service..." --weight=3
 ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app.log"
 
 #=================================================
-# UPGRADE DEPENDENCIES
+# UPGRADE DEPENDENCIES AND APP
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=15
+ynh_script_progression --message="Upgrading dependencies and app..." --weight=15
 
-if [ -n "$(uname -m | grep arm)" ]
-then
-    ynh_install_app_dependencies $pkg_dependencies_rb
-else
-    ynh_install_app_dependencies $pkg_dependencies_x86
-fi
-
-#=================================================
-# UPGRADE TVHEADEND DEB PACKAGE
-#=================================================
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-    ynh_script_progression --message="Install dtv-scan-tables...." --time --weight=5
-    ynh_exec_warn_less dpkg -i ../sources/dtv-scan-tables_0+git20190925.6d01903-0.1~deb10u1_all.deb
-
-    ynh_script_progression --message="Install tvheadend-data..." --time --weight=5
-    ynh_exec_warn_less dpkg -i ../sources/tvheadend-data_4.2.8-dmo1_all.deb
-
-    if [ -n "$(uname -m | grep arm)" ]
-    then
-        ynh_script_progression --message="Install tvheadend for armhf..." --time --weight=5
-        ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-ynh-armhf.deb
-    else [ -n "$(uname -m | grep x86_64)" ]
-        ynh_script_progression --message="Install tvheadend for amd64..." --time --weight=5
-        ynh_exec_warn_less dpkg -i ../sources/tvheadend_4.2.8-dmo1_amd64.deb
-    fi
-fi
+myynh_install
 
 #=================================================
 # START SYSTEMD SERVICE
