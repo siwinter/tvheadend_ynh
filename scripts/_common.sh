@@ -26,17 +26,11 @@ dtv_scan_tables_deb_url="$sources_url/dtv-scan-tables_0%2Bgit20190925.6d01903-0.
 
 
 myynh_install() {
-    
-    #=================================================
-    # INSTALL DEPENDENCIES
-    #=================================================
-    ynh_script_progression --message="Installing dependencies..." --weight=44
+
+    # install dependencies
     ynh_install_app_dependencies $pkg_dependencies
-    #=================================================
-    # DOWNLOAD TVHEADEND PACKAGES
-    #=================================================
-    ynh_script_progression --message="Downloading Tvheadend..." --weight=5
     
+    # download additional packages to tmp-folder
     temp_folder="$(mktemp -d)"
     tvheadend_data_deb=$temp_folder/tvheadend_data.deb
     dtv_scan_tables_deb="$temp_folder/dtv_scan_tables.deb"
@@ -46,21 +40,12 @@ myynh_install() {
     ynh_exec_quiet "wget -q -O $dtv_scan_tables_deb $dtv_scan_tables_deb_url"
     ynh_exec_quiet "wget -q -O $tvheadend_zip $tvheadend_zip_url"
     
-    #=================================================
-    # INSTALL TVHEADEND DEB PACKAGES
-    #=================================================
-    ynh_script_progression --message="Installing Tvheadend-data..." --weight=24
-    ynh_exec_warn_less dpkg -i $tvheadend_data_deb
-
-    ynh_script_progression --message="Installing dtv-scan-tables..." --weight=24
-    ynh_exec_warn_less dpkg -i $dtv_scan_tables_deb
+    # install additional packages
+    ynh_exec_warn_less dpkg -i $tvheadend_data_deb $dtv_scan_tables_deb
     
-    #=================================================
-    # UNZIP TVHEADEND
-    #=================================================
-    ynh_script_progression --message="Unzip tvheadend ..." --weight=2
-    
+    # unzip tvheadend    
     unzip -quo $tvheadend_zip -d "$final_path"
-  
+    
+    #delete tmp-folder
     ynh_secure_remove --file="$temp_folder"
 }
