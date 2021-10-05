@@ -43,7 +43,8 @@ myynh_install() {
     # install additional packages
     ynh_exec_warn_less dpkg -i $tvheadend_data_deb $dtv_scan_tables_deb
     
-    # unzip tvheadend    
+    # unzip tvheadend
+    mkdir -p "$final_path"
     unzip -quo $tvheadend_zip -d "$final_path"
     
     #delete tmp-folder
